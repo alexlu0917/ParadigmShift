@@ -1,0 +1,17 @@
+{
+  "name": "paradigmshift",
+  "version": "1.0.0",
+  "description": "this repository is the source of Paradigm shift project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hardhat": "^2.9.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0"
+  }
+}
