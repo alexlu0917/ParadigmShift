@@ -68,7 +68,7 @@ contract TokenSale is Ownable {
         }
     }
 
-    function setExchangeRate(uint256 rate) external onlyOwner {
+    function setExchangeRate(uint256 rate) external onlyOwner{
         exchangeRate = rate;
         emit ChangedExchangeRate(rate);
     }
