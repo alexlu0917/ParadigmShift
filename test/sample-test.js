@@ -62,7 +62,13 @@ describe("TokenSale Test", function () {
 
    it("Set exchange rate", async function () {
     await tokenSale.setExchangeRate(5);
-
     expect(await tokenSale.exchangeRate()).to.equal(5);
    });
+
+   it("Set exchange rate", async function () {
+    await tokenSale.setExchangeRate(5);
+    expect(await tokenSale.exchangeRate()).to.equal(5);
+   });
+
+
 });
