@@ -31,6 +31,7 @@ contract TokenSale is Ownable {
 
     event Whitelisted(address indexed account, bool indexed allow);
     event Deposited(address indexed account, uint256 amount);
+    event ChangedExchangeRate(uint256 value);
     constructor() {
         token = address(new AxleToken());
     }
@@ -65,6 +66,11 @@ contract TokenSale is Ownable {
         for (uint i = 0; i < users.length; i++) {
             Token(token).mint(users[i], userBalance[users[i]]);
         }
+    }
+
+    function setExchangeRate(uint256 rate) external onlyOwner {
+        exchangeRate = rate;
+        emit ChangedExchangeRate(rate);
     }
 
 }
