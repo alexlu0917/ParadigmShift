@@ -37,6 +37,7 @@ contract TokenSale is Ownable {
     }
 
     function deposit() external payable {
+        require(startTime <= block.timestamp && block.timestamp <= endTime, "Sale Began");
         address user = msg.sender;
         uint256 amount = msg.value.div(exchangeRate);
 
