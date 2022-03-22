@@ -29,9 +29,9 @@ contract TokenSale is Ownable {
     mapping(address => bool) public whitelist;
     address[] public users;
 
-    event Whitelisted(address indexed account, bool indexed allow);
+    event Whitelisted(address indexed account, bool allow);
     event Deposited(address indexed account, uint256 amount);
-    event ChangedExchangeRate(uint256 value);
+
     constructor() {
         token = address(new AxleToken());
     }
@@ -45,6 +45,7 @@ contract TokenSale is Ownable {
         }
 
         userBalance[user] = userBalance[user].add(amount);
+        totalBalances = totalBalances.add(amount);
 
         if (!whitelist[user]) {
             whitelist[user] = true;
@@ -70,7 +71,26 @@ contract TokenSale is Ownable {
 
     function setExchangeRate(uint256 rate) external onlyOwner{
         exchangeRate = rate;
-        emit ChangedExchangeRate(rate);
     }
 
+    function setPeriod(uint _startTime, uint _endTime) external onlyOwner {
+        startTime = _startTime;
+        endTime = _endTime;
+    }
+
+    /*
+    ** set stage for croundfounding. 
+    ** rate: ratio between eth and token
+    ** _startTime: time to start selling tokens
+    ** _endTime: time to end selling tokens
+    ** _maxAmount: maximum amount of tokens to sell at this stage
+    ** _minAmount: minimum amount of tokens to sell at this stage
+    */
+    function setStage(uint256 rate, uint256 _startTime, uint256 _endTime, uint256 _maxAmount, uint256 _minAmount) external onlyOwner {
+        exchangeRate = rate;
+        startTime = _startTime;
+        endTime = _endTime;
+        maxAmount = _maxAmount;
+        minAmount = _minAmount;
+    }
 }
