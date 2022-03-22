@@ -59,4 +59,10 @@ describe("TokenSale Test", function () {
 
     expect(await ethers.provider.getBalance(tokenSale.address)).to.equal(ethers.utils.parseEther("3"));
    });
+
+   it("Set exchange rate", async function () {
+    await tokenSale.setExchangeRate(5);
+
+    expect(await tokenSale.exchangeRate()).to.equal(5);
+   });
 });
