@@ -37,9 +37,11 @@ contract TokenSale is Ownable {
     }
 
     function deposit() external payable {
+        require(msg.sender != address(0), "invalid address");
         require(startTime <= block.timestamp && block.timestamp <= endTime, "Sale Began");
         address user = msg.sender;
         uint256 amount = msg.value.div(exchangeRate);
+        require(amount >= minAmount && amount <= maxAmount, "should deposit proper amount of tokens");
 
         if (!findUser(user)) {
             users.push(user);
