@@ -65,10 +65,18 @@ describe("TokenSale Test", function () {
     expect(await tokenSale.exchangeRate()).to.equal(5);
    });
 
-   it("Set exchange rate", async function () {
-    await tokenSale.setExchangeRate(5);
-    expect(await tokenSale.exchangeRate()).to.equal(5);
+   it("Set Stage", async function () {
+    let startTime = new Date('2022-4-1').getTime()/1000;
+    let endTime = new Date('2022-6-30').getTime()/1000;
+    let exchangeRate = 1000;
+    let maxAmount = 1000;
+    let minAmount = 10;
+
+    await tokenSale.setStage(exchangeRate, startTime, endTime, maxAmount, minAmount);
+    expect(await tokenSale.exchangeRate()).to.equal(exchangeRate);
+    expect(await tokenSale.startTime()).to.equal(startTime);
+    expect(await tokenSale.endTime()).to.equal(endTime);
+    expect(await tokenSale.minAmount()).to.equal(minAmount);
+    expect(await tokenSale.maxAmount()).to.equal(maxAmount);
    });
-
-
 });
