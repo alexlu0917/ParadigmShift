@@ -20,6 +20,7 @@ describe("Token Test", function () {
 
 describe("TokenSale Test", function () {
   let TokenSale, tokenSale, toTransfer, ERC20Token, addr1, addr2, addr3, addr4;
+  let startTime, endTime, exchangeRate, maxAmount, minAmount;
 
   beforeEach(async () => {
     [addr1, addr2, addr3, addr4] = await ethers.getSigners();
@@ -28,6 +29,15 @@ describe("TokenSale Test", function () {
     tokenSale = await TokenSale.deploy();
     await tokenSale.deployed();
     ERC20Token = await tokenSale.token();
+
+    let startTime = Math.floor(new Date().getTime()/1000) - 1000;
+    let endTime = Math.floor(new Date().getTime()/1000) + 1000;
+    console.log(endTime, 'endTime');
+    let exchangeRate = 1;
+    let maxAmount = ethers.utils.parseEther("10");
+    let minAmount = 10;
+
+    await tokenSale.setStage(exchangeRate, startTime, endTime, maxAmount, minAmount);
   });
 
   it("Initialize", async function () {
@@ -66,17 +76,10 @@ describe("TokenSale Test", function () {
   });
 
   it("Set Stage", async function () {
-    let startTime = new Date('2022-4-1').getTime() / 1000;
-    let endTime = new Date('2022-6-30').getTime() / 1000;
-    let exchangeRate = 1000;
-    let maxAmount = 1000;
-    let minAmount = 10;
-
-    await tokenSale.setStage(exchangeRate, startTime, endTime, maxAmount, minAmount);
-    expect(await tokenSale.exchangeRate()).to.equal(exchangeRate);
-    expect(await tokenSale.startTime()).to.equal(startTime);
-    expect(await tokenSale.endTime()).to.equal(endTime);
-    expect(await tokenSale.minAmount()).to.equal(minAmount);
-    expect(await tokenSale.maxAmount()).to.equal(maxAmount);
+    expect(await tokenSale.exchangeRate().value).to.equal(exchangeRate);
+    expect(await tokenSale.startTime().value).to.equal(startTime);
+    expect(await tokenSale.endTime().value).to.equal(endTime);
+    expect(await tokenSale.minAmount().value).to.equal(minAmount);
+    expect(await tokenSale.maxAmount().value).to.equal(maxAmount);
   });
 });
